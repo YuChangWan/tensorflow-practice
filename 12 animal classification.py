@@ -22,13 +22,12 @@ if __name__ == '__main__':
     W = tf.Variable(tf.random_normal([nb_Xs, nb_classes]), name='weight')
     b = tf.Variable(tf.random_normal([nb_classes]), name='bias')
 
-    logits = tf.matmul(X,W) + b
-    hypothesis = tf.nn.softmax(logits)
+    hypothesis = tf.matmul(X,W) + b
 
     # cross-entropy cost/loss
 
     # - tf.reduce_sum(Y * tf.log(hypothesis), axis=1)
-    cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=Y_one_hot)
+    cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=hypothesis, labels=Y_one_hot)
     cost = tf.reduce_mean(cross_entropy)
     train = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(cost)
 

@@ -11,12 +11,13 @@ if __name__ == '__main__':
     W = tf.Variable(tf.random_normal([4, nb_classes]), name='weight')
     b = tf.Variable(tf.random_normal([nb_classes]), name='bias')
 
+    hypothesis = tf.matmul(X, W) + b
+
     # tf.nn.softmax computes softmax activations
     # softmax = exp(logits) / reduce_sum(exp(logits), dim)
-    hypothesis = tf.nn.softmax(tf.matmul(X, W) + b)
-
+    softmax = tf.nn.softmax(hypothesis)
     # Cross entropy cost/loss
-    cost = tf.reduce_mean(- tf.reduce_sum(Y * tf.log(hypothesis), axis=1))
+    cost = tf.reduce_mean(- tf.reduce_sum(Y * tf.log(softmax), axis=1))
     train = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(cost)
 
     # Launch graph
